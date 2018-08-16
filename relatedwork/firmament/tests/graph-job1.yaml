@@ -1,20 +1,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: queue-affinity
+  name: graph-affinity
 spec:
   completions: 1
   parallelism: 1
   template:
     metadata:
-      name: queue-affinity
+      name: graph-affinity
       labels:
         schedulerName: poseidon
     spec:
-      nodeName: master
       schedulerName: poseidon
       containers:
-      - name: queue-affinity
+      - name: graph-affinity
         image: firmament/libhdfs3
         resources:
           requests:

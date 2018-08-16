@@ -11,9 +11,10 @@ spec:
       labels:
         schedulerName: poseidon
     spec:
-      nodeName: master
       schedulerName: poseidon
       containers:
+      nodeSelector: 
+        affinity: affinity
       - name: graph-affinity
         image: firmament/libhdfs3
         resources:

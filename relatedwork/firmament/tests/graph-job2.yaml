@@ -1,13 +1,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: queue-all
+  name: graph-all
 spec:
   completions: 1
   parallelism: 1
   template:
     metadata:
-      name: queue-all
+      name: graph-all
       labels:
         schedulerName: poseidon
     spec:
@@ -15,7 +15,7 @@ spec:
       nodeSelector: 
         type: all
       containers:
-      - name: queue-all
+      - name: graph-all
         image: firmament/libhdfs3
         resources:
           requests:
