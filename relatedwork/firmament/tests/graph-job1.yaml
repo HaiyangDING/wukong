@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: queue-affinity
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      name: queue-affinity
+      labels:
+        schedulerName: poseidon
+    spec:
+      nodeName: master
+      schedulerName: poseidon
+      containers:
+      - name: queue-affinity
+        image: firmament/libhdfs3
+        resources:
+          requests:
+            memory: "10Mi"
+            cpu: "7"
+          limits:
+            memory: "12Mi"
+            cpu: "7"
+        command: ["/bin/sh", "-c", "/cpu_spin 600"]
+      restartPolicy: Never

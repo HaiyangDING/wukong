@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: graph-all
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      name: graph-all
+      labels:
+        schedulerName: poseidon
+    spec:
+      nodeSelector:
+        type: all
+      schedulerName: poseidon
+      containers:
+      - name: graph-all
+        image: firmament/libhdfs3
+        resources:
+          requests:
+            memory: "10Mi"
+            cpu: "2"
+          limits:
+            memory: "12Mi"
+            cpu: "2"
+        command: ["/bin/sh", "-c", "/cpu_spin 600"]
+      restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: graph-affinity
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      name: graph-affinity
+      labels:
+        schedulerName: poseidon
+    spec:
+      nodeName: master
+      schedulerName: poseidon
+      containers:
+      - name: graph-affinity
+        image: firmament/libhdfs3
+        resources:
+          requests:
+            memory: "10Mi"
+            cpu: "7"
+          limits:
+            memory: "12Mi"
+            cpu: "7"
+        command: ["/bin/sh", "-c", "/cpu_spin 600"]
+      restartPolicy: Never
